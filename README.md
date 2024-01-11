@@ -25,13 +25,18 @@ After activating the virtual environment, install the required libraries:
 pip install -r requirements.txt
 ```
 ## Usage
-chain usage     : python blockchain.py
+chain usage     : 
+```
+                  python blockchain.py
                   python blockchain.py -p 5000
                   python blockchain.py --port 5000
-
-client usage    : python blockchainClient.py
+```
+client usage    :
+```
+                  python blockchainClient.py
                   python blockchainClient.py -p 8080
                   python blockchainClient.py --port 8080
+```
 ## Features
 
 
