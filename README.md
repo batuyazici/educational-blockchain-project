@@ -1,6 +1,5 @@
-## 🌐 Simulating Blockchain Architecture for Educational Purposes in University Courses 🌐
+## 🌐 Simulating Blockchain Architecture for Educational Purposes 🌐
 
-## 🖇 Description
 
 [![Python Badge](https://img.shields.io/badge/-Python-3776AB?style=flat-square&labelColor=3776AB&logo=Python&logoColor=white&link=link)](link)
 [![HTML Badge](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&labelColor=000&logo=html5&logoColor=white&link=link)](link)
