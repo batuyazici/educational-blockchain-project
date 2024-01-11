@@ -1,6 +1,5 @@
 ## 🌐 Simulating Blockchain Architecture for Educational Purposes 🌐
 
-
 [![Python Badge](https://img.shields.io/badge/-Python-3776AB?style=flat-square&labelColor=3776AB&logo=Python&logoColor=white&link=link)](link)
 [![HTML Badge](https://img.shields.io/badge/-HTML-E34F26?style=flat-square&labelColor=000&logo=html5&logoColor=white&link=link)](link)
 [![CSS Badge](https://img.shields.io/badge/-CSS-1572B6?style=flat-square&labelColor=000&logo=css3&logoColor=white&link=link)](link)
@@ -9,6 +8,9 @@
 [![Bootstrap Badge](https://img.shields.io/badge/-Bootstrap-563D7C?style=flat-square&labelColor=563D7C&logo=Bootstrap&logoColor=white&link=link)](link)
 
 <i>This project aims to explain the fundamental concepts of blockchain technology through an interactive and educational simulation. Our goal is to make blockchain accessible to beginners and anyone interested in the technology. To create this simulation, we used Python and specific libraries to construct the blockchain backend. For the user interface, we employed HTML, CSS, and JavaScript to create a simple yet effective interactive platform. This project serves as an entry-level gateway into the world of blockchain, offering hands-on experience with its key concepts and workings. </i>
+
+## 🖇 Blockchain Network Architecture Diagram
+![blockchain_diagram](https://github.com/batuyazici/educational-blockchain-project/assets/117301486/79b83580-d7eb-48ac-aee6-86b31e1f15b3)
 
 ## 🖇 Project Status
 <b>Current Status:</b> <i>Active Development</i> 🟢
