@@ -10,6 +10,9 @@
 
 <i>This project aims to explain the fundamental concepts of blockchain technology through an interactive and educational simulation. Our goal is to make blockchain accessible to beginners and anyone interested in the technology. To create this simulation, we used Python and specific libraries to construct the blockchain backend. For the user interface, we employed HTML, CSS, and JavaScript to create a simple yet effective interactive platform. This project serves as an entry-level gateway into the world of blockchain, offering hands-on experience with its key concepts and workings. </i>
 
+## 🖇 Project Status
+<b>Current Status:</b> <i>Active Development</i> 🟢
+
 ## 🖇 Features
 
 <i>The simulation includes the following key features:</i>
@@ -21,6 +24,17 @@
 🔹 <b>Ledger Structure:</b> <i>Provides insights into how data is stored and organized in a blockchain.</i> <br>
 🔹 <b>Block Connectivity:</b> <i>Visualizes how blocks are linked to form a secure and unalterable chain.</i> <br>
 🔹 <b>Public-Private Key Pair Creation:</b> <i>Highlights the cryptographic methods used in blockchain for secure communications.</i> <br>
+
+## 🖇 Upcoming Features
+
+<i>We are dedicated to enhancing the functionality and user experience of our blockchain simulation. Here are some key features we plan to implement:</i>
+
+🔹 <b>Block Broadcast After Mining: </b><i>Newly mined blocks and updated chains are automatically broadcasted to the entire network, ensuring that all nodes have the latest version of the blockchain.</i> <br>
+🔹 <b>Transaction Pool for Each Node: </b><i>Individual transaction pools allow nodes to collect and store transactions before they are mined into blocks, enhancing the efficiency of the transaction process.</i> <br>
+🔹 <b>Peer-to-Peer (P2P) Connections Between Nodes: </b><i>Establishing a P2P network enables nodes to communicate directly with each other, a crucial feature for decentralization and robustness in blockchain networks</i> <br>
+🔹 <b>Web Application UI with React:</b> <i>Upgrading the user interface to a web application, possibly using React, provides a more interactive and user-friendly experience.</i> <br>
+🔹<b>Enhanced Wallet Mechanism: </b><i>Improving the wallet functionality to include features like saving created wallets and their balances enhances user interaction and security.</i> <br>
+🔹 <b>Advanced Mining Mechanism: </b><i>Updating the mining mechanism to work with more complex and difficult hashes simulates the real-world challenges in blockchain mining.</i> <br>
 
 ## 🖇 Installation
 <i>🔹 First, clone the repository to your local machine:</i>
