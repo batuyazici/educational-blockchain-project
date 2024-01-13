@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../static/assets/chain_favicon.ico"
+    />
     <title>Blockchain Frontend</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/vendor/DataTables/css/datatables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="/static/css/custom.css" rel="stylesheet">
-
+    <link
+      href="/static/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/static/vendor/DataTables/css/datatables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link href="/static/css/custom.css" rel="stylesheet" />
   </head>
 
   <body>
-
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Blockchain Frontend</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <img
+          src="../static/assets/chain_logo.png"
+          alt=""
+          width="50"
+          height="50"
+          style="margin-right: 10px; border-radius: 1.5em"
+        />
+        <a class="navbar-brand" href="#">Blockchain Node</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="/">Mine
+              <a class="nav-link" href="/"
+                >Mine
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -44,202 +72,220 @@
 
     <!--  -->
     <div class="container">
-
       <div class="row">
         <div class="col-lg-12">
           <div class="card-body">
-            <h4 class="card-title">Transactions to be added to the next block &nbsp;&nbsp;&nbsp;
-              <button type="submit" id="refresh_transactions" class="btn btn-sq-xs btn-primary">
+            <h4 class="card-title">
+              Transactions to be added to the next block &nbsp;&nbsp;&nbsp;
+              <button
+                type="submit"
+                id="refresh_transactions"
+                class="btn btn-sq-xs btn-primary"
+              >
                 <i class="fa fa-refresh"></i>
               </button>
             </h4>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- Unmined Transactions Table -->
     <div class="container">
-      <table id="unmined_transactions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-      </table>
+      <table
+        id="unmined_transactions_table"
+        class="table table-striped table-bordered"
+        cellspacing="0"
+        width="100%"
+      ></table>
 
       <div class="col-lg-12 text-center">
-        <input type="button" id="mine_button" class="btn btn-primary btn-lg" value="Mine">
+        <input
+          type="button"
+          id="mine_button"
+          class="btn btn-primary btn-lg"
+          value="Mine"
+        />
       </div>
-
     </div>
 
-    <hr>
+    <hr />
 
     <div class="container">
-
       <div class="row">
         <div class="col-lg-12">
           <div class="card-body">
-            <h4 class="card-title">Transactions on the Blockchain &nbsp;&nbsp;&nbsp;
-              <button type="submit" id="refresh_blockchain" class="btn btn-sq-xs btn-primary">
+            <h4 class="card-title">
+              Transactions on the Blockchain &nbsp;&nbsp;&nbsp;
+              <button
+                type="submit"
+                id="refresh_blockchain"
+                class="btn btn-sq-xs btn-primary"
+              >
                 <i class="fa fa-refresh"></i>
               </button>
             </h4>
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- Blockchain Transactions Table -->
     <div class="container">
-      <table id="transactions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-      </table>
+      <table
+        id="transactions_table"
+        class="table table-striped table-bordered"
+        cellspacing="0"
+        width="100%"
+      ></table>
     </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="/static/vendor/DataTables/js/datatables.min.js"></script>
+    <script
+      type="text/javascript"
+      src="/static/vendor/DataTables/js/datatables.min.js"
+    ></script>
     <script src="/static/vendor/DataTables/js/ellipsis.js"></script>
 
-
     <script>
-      $(function(){
+      $(function () {
+        $.ajax({
+          url: "/transactions/get",
+          type: "GET",
+          success: function (response) {
+            // Generate Transactions Table
+            var transactions = [];
+            var count = 1;
+
+            for (var i = 0; i < response["transactions"].length; i++) {
+              var transaction = [
+                count,
+                response["transactions"][i]["senderPublicKey"],
+                response["transactions"][i]["recipientAddress"],
+                response["transactions"][i]["senderAddress"],
+                response["transactions"][i]["amount"],
+              ];
+              transactions.push(transaction);
+              count += 1;
+            }
+
+            // Initialize DataTable
+            $("#unmined_transactions_table").dataTable({
+              data: transactions,
+              columns: [
+                { title: "#" },
+                { title: "Sender Public Key" },
+                { title: "Recipient Address" },
+                { title: "Sender Address" },
+                { title: "Value" },
+              ],
+              columnDefs: [
+                {
+                  targets: [1, 2, 3, 4],
+                  render: $.fn.dataTable.render.ellipsis(25),
+                },
+              ],
+            });
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
 
         $.ajax({
-    url: "/transactions/get",
-    type: 'GET',
-    success: function(response){
-      // Generate Transactions Table
-      var transactions = [];
-      var count = 1;
+          url: "/chain",
+          type: "GET",
+          success: function (response) {
+            var transactions = [];
+            var count = 1;
 
-      for (var i = 0; i < response['transactions'].length; i++) { 
-        var transaction = [
-          count,
-          response['transactions'][i]['senderPublicKey'],
-          response['transactions'][i]["recipientAddress"],
-          response['transactions'][i]["senderAddress"],
-          response['transactions'][i]["amount"]
-        ];
-        transactions.push(transaction);
-        count += 1;
-      };
+            response["chain"].forEach((block, blockIdx) => {
+              if (blockIdx > 0) {
+                // Skip the genesis block
+                block["transactions"].forEach((transaction) => {
+                  var formattedDateTime = new Date(
+                    block["timestamp"] * 1000
+                  ).toLocaleString("en-us", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  });
 
-      // Initialize DataTable
-      $('#unmined_transactions_table').dataTable({
-        data: transactions,
-        columns: [
-          { title: "#" },
-          { title: "Sender Public Key" },
-          { title: "Recipient Address" },
-          { title: "Sender Address" },
-          { title: "Value" }
-        ],
-        columnDefs: [
-          { targets: [1, 2, 3, 4], render: $.fn.dataTable.render.ellipsis(25) }
-        ]
-      });
-    },
-    error: function(error){
-      console.log(error);
-    }
-  });
+                  transactions.push([
+                    count++,
+                    transaction["recipientAddress"] || "N/A", // Use "N/A" if undefined
+                    transaction["senderAddress"] || "N/A",
+                    transaction["amount"] || "0",
+                    formattedDateTime,
+                    blockIdx,
+                  ]);
+                });
+              }
+            });
 
-
-
-  $.ajax({
-  url: "/chain",
-  type: 'GET',
-  success: function(response) {
-    var transactions = [];
-    var count = 1;
-
-    response["chain"].forEach((block, blockIdx) => {
-      if (blockIdx > 0) { // Skip the genesis block
-        block["transactions"].forEach(transaction => {
-          var formattedDateTime = new Date(block["timestamp"] * 1000).toLocaleString("en-us", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-          });
-
-          transactions.push([
-            count++,
-            transaction["recipientAddress"] || "N/A", // Use "N/A" if undefined
-            transaction["senderAddress"] || "N/A",
-            transaction["amount"] || "0",
-            formattedDateTime,
-            blockIdx
-          ]);
+            $("#transactions_table").dataTable({
+              data: transactions,
+              columns: [
+                { title: "#" },
+                { title: "Recipient Address" },
+                { title: "Sender Address" },
+                { title: "Value" },
+                { title: "Timestamp" },
+                { title: "Block" },
+              ],
+              columnDefs: [
+                {
+                  targets: [1, 2, 3, 4, 5],
+                  render: $.fn.dataTable.render.ellipsis(25),
+                },
+              ],
+            });
+          },
+          error: function (error) {
+            console.log(error);
+          },
         });
-      }
-    });
-
-    $('#transactions_table').dataTable({
-      data: transactions,
-      columns: [
-        { title: "#" },
-        { title: "Recipient Address" },
-        { title: "Sender Address" },
-        { title: "Value" },
-        { title: "Timestamp" },
-        { title: "Block" }
-      ],
-      columnDefs: [{ targets: [1, 2, 3, 4, 5], render: $.fn.dataTable.render.ellipsis(25) }]
-    });
-  },
-  error: function(error) {
-    console.log(error);
-  }
-});
-
 
         $("#mine_button").click(function () {
-
           $.ajax({
             url: "/mine",
             type: "GET",
-            success: function(response){
-
+            success: function (response) {
               window.location.reload();
-              
             },
-            error: function(error){
+            error: function (error) {
               console.log(error);
-            }
+            },
           });
-
         });
-
 
         $("#refresh_transactions").click(function () {
-
           window.location.reload();
-
         });
 
-
         $("#refresh_blockchain").click(function () {
-
           $.ajax({
             url: "/nodes/resolve",
             type: "GET",
-            success: function(response){
-
+            success: function (response) {
               window.location.reload();
-              
             },
-            error: function(error){
+            error: function (error) {
               console.log(error);
-            }
+            },
           });
-
         });
-
-
-      })
+      });
     </script>
+    <footer class="bg-dark text-white fixed-bottom">
+      <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.2)">
+        Mehmet Batuhan Yazici - Damla Sabaz | 2024
+      </div>
+    </footer>
   </body>
 </html>
