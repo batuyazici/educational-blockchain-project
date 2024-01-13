@@ -42,17 +42,17 @@ class Blockchain:
 
 
 
-    def registerNode(self, node_url):
+    def registerNode(self, nodeUrl):
         """
         Add a new node to the list of nodes
         """
-        #Checking node_url has valid format
-        parsed_url = urlparse(node_url)
-        if parsed_url.netloc:
-            self.nodes.add(parsed_url.netloc)
-        elif parsed_url.path:
+        #Checking nodeUrl has valid format
+        parsedUrl = urlparse(nodeUrl)
+        if parsedUrl.netloc:
+            self.nodes.add(parsedUrl.netloc)
+        elif parsedUrl.path:
             # Accepts an URL without scheme like '192.168.0.5:5000'.
-            self.nodes.add(parsed_url.path)
+            self.nodes.add(parsedUrl.path)
         else:
             raise ValueError('Invalid URL')
 
@@ -63,13 +63,13 @@ class Blockchain:
         """
         try:
             # Decode the public key from hex format
-            public_key = VerifyingKey.from_string(bytes.fromhex(senderPublicKey), curve=SECP256k1)
+            publicKey = VerifyingKey.from_string(bytes.fromhex(senderPublicKey), curve=SECP256k1)
 
             # Create a SHA-256 hash of the transaction
-            transaction_hash = hashlib.sha256(str(transaction).encode('utf-8')).digest()
+            transactionHash = hashlib.sha256(str(transaction).encode('utf-8')).digest()
 
             # Verify the signature
-            return public_key.verify(binascii.unhexlify(signature), transaction_hash, sigdecode=sigdecode_der)
+            return publicKey.verify(binascii.unhexlify(signature), transactionHash, sigdecode=sigdecode_der)
             
         except Exception as e:
             print("Verification failed:", e)
@@ -102,15 +102,15 @@ class Blockchain:
                 return False
 
 
-    def createBlock(self, nonce, previous_hash):
+    def createBlock(self, nonce, previousHash):
         """
         Add a block of transactions to the blockchain
         """
-        block = {'block_number': len(self.chain) + 1,
+        block = {'blockNumber': len(self.chain) + 1,
                 'timestamp': time(),
                 'transactions': self.transactions,
                 'nonce': nonce,
-                'previous_hash': previous_hash}
+                'previousHash': previousHash}
 
         # Reset the current list of transactions
         self.transactions = []
@@ -124,30 +124,30 @@ class Blockchain:
         Create a SHA-256 hash of a block
         """
         # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
-        block_string = json.dumps(block, sort_keys=True).encode()
+        blockString = json.dumps(block, sort_keys=True).encode()
         
-        return hashlib.sha256(block_string).hexdigest()
+        return hashlib.sha256(blockString).hexdigest()
 
 
     def proofOfWork(self):
         """
         Proof of work algorithm
         """
-        last_block = self.chain[-1]
-        last_hash = self.hash(last_block)
+        lastBlock = self.chain[-1]
+        lastHash = self.hash(lastBlock)
 
         nonce = 0
-        while self.validationProof(self.transactions, last_hash, nonce) is False:
+        while self.validationProof(self.transactions, lastHash, nonce) is False:
             nonce += 1
 
         return nonce
 
 
-    def validationProof(self, transactions, last_hash, nonce, difficulty=miningDifficulty):
+    def validationProof(self, transactions, lastHash, nonce, difficulty=miningDifficulty):
         """
         Check if a hash amount satisfies the mining conditions. This function is used within the proofOfWork function.
         """
-        guess = (str(transactions)+str(last_hash)+str(nonce)).encode()
+        guess = (str(transactions)+str(lastHash)+str(nonce)).encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:difficulty] == '0'*difficulty
 
@@ -156,16 +156,16 @@ class Blockchain:
         """
         check if a bockchain is valid
         """
-        last_block = chain[0]
-        current_index = 1
+        lastBlock = chain[0]
+        currentIndex = 1
 
-        while current_index < len(chain):
-            block = chain[current_index]
-            #print(last_block)
+        while currentIndex < len(chain):
+            block = chain[currentIndex]
+            #print(lastBlock)
             #print(block)
             #print("\n-----------\n")
             # Check that the hash of the block is correct
-            if block['previous_hash'] != self.hash(last_block):
+            if block['previousHash'] != self.hash(lastBlock):
                 return False
 
             # Check that the Proof of Work is correct
@@ -175,11 +175,11 @@ class Blockchain:
             transaction_elements = ['senderAddress', 'recipientAddress', 'amount']
             transactions = [OrderedDict((k, transaction[k]) for k in transaction_elements) for transaction in transactions]
 
-            if not self.validationProof(transactions, block['previous_hash'], block['nonce'], miningDifficulty):
+            if not self.validationProof(transactions, block['previousHash'], block['nonce'], miningDifficulty):
                 return False
 
-            last_block = block
-            current_index += 1
+            lastBlock = block
+            currentIndex += 1
 
         return True
 
@@ -189,10 +189,10 @@ class Blockchain:
         by replacing our chain with the longest one in the network.
         """
         neighbours = self.nodes
-        new_chain = None
+        newChain = None
 
         # We're only looking for chains longer than ours
-        max_length = len(self.chain)
+        maxLength = len(self.chain)
 
         # Grab and verify the chains from all the nodes in our network
         for node in neighbours:
@@ -204,13 +204,13 @@ class Blockchain:
                 chain = response.json()['chain']
 
                 # Check if the length is longer and the chain is valid
-                if length > max_length and self.validationChain(chain):
-                    max_length = length
-                    new_chain = chain
+                if length > maxLength and self.validationChain(chain):
+                    maxLength = length
+                    newChain = chain
 
         # Replace our chain if we discovered a new, valid chain longer than ours
-        if new_chain:
-            self.chain = new_chain
+        if newChain:
+            self.chain = newChain
             return True
 
         return False
@@ -280,7 +280,7 @@ def full_chain():
 @app.route('/mine', methods=['GET'])
 def mine():
     # We run the proof of work algorithm to get the next proof...
-    last_block = blockchain.chain[-1]
+    lastBlock = blockchain.chain[-1]
     nonce = blockchain.proofOfWork()
 
     # We must receive a reward for finding the proof.
@@ -292,15 +292,15 @@ def mine():
                                   signature="")
 
     # Forge the new Block by adding it to the chain
-    previous_hash = blockchain.hash(last_block)
-    block = blockchain.createBlock(nonce, previous_hash)
+    previousHash = blockchain.hash(lastBlock)
+    block = blockchain.createBlock(nonce, previousHash)
 
     response = {
         'message': "New Block Forged",
-        'block_number': block['block_number'],
+        'blockNumber': block['blockNumber'],
         'transactions': block['transactions'],
         'nonce': block['nonce'],
-        'previous_hash': block['previous_hash'],
+        'previousHash': block['previousHash'],
     }
     return jsonify(response), 200
 
@@ -332,7 +332,7 @@ def consensus():
     if replaced:
         response = {
             'message': 'Our chain was replaced',
-            'new_chain': blockchain.chain
+            'newChain': blockchain.chain
         }
     else:
         response = {

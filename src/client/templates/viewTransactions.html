@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Wallet Generator
+              <a class="nav-link" href="/">Wallet 
               </a>
             </li>
             <li class="nav-item">
@@ -120,11 +120,11 @@
                   var formattedDateTime = date.toLocaleTimeString("en-us", options);
 
                   transaction = [count,
-                                response["chain"][i]["transactions"][j]["recipient_address"],
-                                response["chain"][i]["transactions"][j]["sender_address"],
-                                response["chain"][i]["transactions"][j]["value"],
+                                response["chain"][i]["transactions"][j]["recipientAddress"],
+                                response["chain"][i]["transactions"][j]["senderAddress"],
+                                response["chain"][i]["transactions"][j]["amount"],
                                 formattedDateTime,
-                                response["chain"][i]["block_number"]];
+                                response["chain"][i]["blockNumber"] - 1];
                   transactions.push(transaction);
 
                   count += 1;
