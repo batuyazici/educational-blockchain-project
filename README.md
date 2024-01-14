@@ -13,6 +13,10 @@
 
 
 
+https://github.com/batuyazici/educational-blockchain-project/assets/92368839/c1a956bc-5e94-4cb0-a6f3-4e2425355793
+
+
+
 ## 🖇 Blockchain Network Architecture Diagram
 ![blockchain_diagram](https://github.com/batuyazici/educational-blockchain-project/assets/117301486/79b83580-d7eb-48ac-aee6-86b31e1f15b3)
 
