@@ -124,7 +124,7 @@ def generateTransaction():
     senderPrivateKey = request.form['senderPrivateKey']
     recipientAddress = request.form['recipientAddress']
     amount = request.form['amount']
-
+    amount = float(amount)
     transaction = Transaction(senderPublicKey, senderAddress, senderPrivateKey, recipientAddress, amount)
 
     response = {
