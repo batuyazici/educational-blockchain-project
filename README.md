@@ -13,7 +13,7 @@
 
 
 
-https://github.com/batuyazici/educational-blockchain-project/assets/92368839/c1a956bc-5e94-4cb0-a6f3-4e2425355793
+https://github.com/batuyazici/educational-blockchain-project/assets/92368839/cefc1151-9ab6-439a-b922-56e435bfc040
 
 
 
