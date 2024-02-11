@@ -83,7 +83,7 @@ python blockchain.py -p 5000
 python blockchain.py --port 5000
 ```
 ### ▶️ Running the Blockchain Client
-<i>T🔹 o start the blockchain client, use this command:</i>
+<i>🔹 o start the blockchain client, use this command:</i>
 ```
 python blockchainClient.py
 ```
